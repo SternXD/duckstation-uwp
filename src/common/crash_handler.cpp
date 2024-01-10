@@ -9,7 +9,7 @@
 #include <cstdio>
 #include <ctime>
 
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(_UWP)
 #include "windows_headers.h"
 
 #include "thirdparty/StackWalker.h"

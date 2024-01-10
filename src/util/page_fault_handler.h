@@ -13,6 +13,10 @@ enum class HandlerResult
   ExecuteNextHandler,
 };
 
-HandlerResult HandlePageFault(void* exception_pc, void* fault_address, bool is_write);
-bool Install(Error* error = nullptr);
-} // namespace PageFaultHandler
+using Handler = HandlerResult (*)(void* exception_pc, void* fault_address, bool is_write);
+
+bool InstallHandler(Handler callback);
+bool RemoveHandler(Handler callback);
+u32 GetHandlerCodeSize();
+
+} // namespace Common::PageFaultHandler

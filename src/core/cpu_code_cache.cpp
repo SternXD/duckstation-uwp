@@ -124,6 +124,11 @@ PerfScope MIPSPerfScope("MIPS");
 
 #endif
 
+// Currently remapping the code buffer doesn't work in macOS. TODO: Make dynamic instead...
+#ifndef __APPLE__ && !defined(_UWP)
+#define USE_STATIC_CODE_BUFFER 1
+#endif
+
 #if defined(CPU_ARCH_ARM32)
 // Use a smaller code buffer size on AArch32 to have a better chance of being in range.
 static constexpr u32 RECOMPILER_CODE_CACHE_SIZE = 16 * 1024 * 1024;
