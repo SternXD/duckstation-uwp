@@ -205,6 +205,12 @@ bool CPU::CodeCache::ProcessStartup(Error* error)
     return false;
 
   return true;
+#ifdef _UWP
+  s_code_buffer.ReserveCode(Common::PageFaultHandler::GetHandlerCodeSize());
+#endif
+
+  if (!Common::PageFaultHandler::InstallHandler(ExceptionHandler))
+    Panic("Failed to install page fault handler");
 }
 
 void CPU::CodeCache::ProcessShutdown()
