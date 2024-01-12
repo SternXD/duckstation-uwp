@@ -70,7 +70,7 @@ bool D3D11Device::CreateDevice(std::string_view adapter, bool threaded_presentat
   std::unique_lock lock(s_instance_mutex);
 
   UINT create_flags = 0;
-  if (m_debug_device || true)
+  if (m_debug_device)
     create_flags |= D3D11_CREATE_DEVICE_DEBUG;
 
   m_dxgi_factory = D3DCommon::CreateFactory(m_debug_device, error);
