@@ -596,11 +596,14 @@ static std::array<const char*, static_cast<u32>(InputSourceType::Count)> s_input
   "Pointer",
   "Sensor",
 #ifdef _WIN32
-  "DInput",
   "XInput",
+#ifndef _UWP
+  "DInput",
   "RawInput",
 #endif
 #ifndef __ANDROID__
+#endif
+#ifdef ENABLE_SDL2
   "SDL",
 #else
   "Android",
@@ -623,16 +626,20 @@ bool InputManager::GetInputSourceDefaultEnabled(InputSourceType type)
   {
     case InputSourceType::Keyboard:
     case InputSourceType::Pointer:
-      return true;
+      return false;
 
 #ifdef _WIN32
+    case InputSourceType::XInput:
+      return true;
+
+#ifndef _UWP
     case InputSourceType::DInput:
       return false;
 
-    case InputSourceType::XInput:
-      return false;
+    
     case InputSourceType::RawInput:
       return false;
+#endif
 #endif
 
 #ifndef __ANDROID__
@@ -1281,9 +1288,9 @@ bool InputManager::IsUsingRawInput()
 void InputManager::SetDefaultSourceConfig(SettingsInterface& si)
 {
   si.ClearSection("InputSources");
-  si.SetBoolValue("InputSources", "SDL", true);
+  si.SetBoolValue("InputSources", "SDL", false);
   si.SetBoolValue("InputSources", "SDLControllerEnhancedMode", false);
-  si.SetBoolValue("InputSources", "XInput", false);
+  si.SetBoolValue("InputSources", "XInput", true);
   si.SetBoolValue("InputSources", "RawInput", false);
 }
 
