@@ -4513,6 +4513,7 @@ void FullscreenUI::PopulatePostProcessingChain(SettingsInterface* si, const char
   const u32 stages = PostProcessing::Config::GetStageCount(*si, section);
   s_postprocessing_stages.clear();
   s_postprocessing_stages.reserve(stages);
+  s_postprocessing_stages.clear();
   for (u32 i = 0; i < stages; i++)
   {
     PostProcessingStageInfo psi;
