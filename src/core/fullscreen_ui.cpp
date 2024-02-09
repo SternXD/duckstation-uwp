@@ -6313,8 +6313,11 @@ void FullscreenUI::DrawGameList(const ImVec2& heading_size)
     return;
   }
 
-  if (!AreAnyDialogsOpen() && WantsToCloseMenu())
-    ReturnToPreviousWindow();
+  if (WantsToCloseMenu())
+  {
+    if (ImGui::IsWindowFocused())
+      ReturnToPreviousWindow();
+  }
 
   auto game_list_lock = GameList::GetLock();
   const GameList::Entry* selected_entry = nullptr;
