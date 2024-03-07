@@ -35,7 +35,7 @@ void OpenLeaderboardsWindow();
 bool IsLeaderboardsWindowOpen();
 void ReturnToMainWindow();
 void ReturnToPreviousWindow();
-void SetStandardSelectionFooterText(bool back_instead_of_cancel);
+void DrawAchievementsLoginWindow();
 #endif
 
 void Shutdown();
