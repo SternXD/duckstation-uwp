@@ -674,7 +674,8 @@ bool D3D11Device::BeginPresent(bool skip_present)
   // This blows our our GPU usage number considerably, so read the timestamp before the final blit
   // in this configuration. It does reduce accuracy a little, but better than seeing 100% all of
   // the time, when it's more like a couple of percent.
-  if (m_vsync_mode == GPUVSyncMode::FIFO && m_gpu_timing_enabled)
+
+  if ((m_sync_mode == DisplaySyncMode::VSync || m_sync_mode == DisplaySyncMode::VSyncRelaxed) && m_gpu_timing_enabled)
     PopTimestampQuery();
 
   static constexpr float clear_color[4] = {0.0f, 0.0f, 0.0f, 1.0f};
@@ -694,10 +695,12 @@ void D3D11Device::EndPresent(bool explicit_present)
 
   if (m_vsync_mode != GPUVSyncMode::FIFO && m_gpu_timing_enabled)
     PopTimestampQuery();
-
-  const UINT sync_interval = static_cast<UINT>(m_vsync_mode == GPUVSyncMode::FIFO);
-  const UINT flags = (m_vsync_mode == GPUVSyncMode::Disabled && m_using_allow_tearing) ? DXGI_PRESENT_ALLOW_TEARING : 0;
-  m_swap_chain->Present(sync_interval, flags);
+  if (m_sync_mode == DisplaySyncMode::VSync || m_sync_mode == DisplaySyncMode::VSyncRelaxed)
+    m_swap_chain->Present(BoolToUInt32(1), 0);
+  else if (m_using_allow_tearing) // Disabled or VRR, VRR requires the allow tearing flag :/
+    m_swap_chain->Present(0, DXGI_PRESENT_ALLOW_TEARING);
+  else
+    m_swap_chain->Present(0, 0);
 
   if (m_gpu_timing_enabled)
     KickTimestampQuery();

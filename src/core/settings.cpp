@@ -1485,6 +1485,47 @@ const char* Settings::GetDisplayScalingDisplayName(DisplayScalingMode mode)
   return Host::TranslateToCString("DisplayScalingMode", s_display_scaling_display_names[static_cast<int>(mode)]);
 }
 
+static constexpr const std::array s_display_sync_mode_names = {
+  "Disabled",
+  "VSync",
+  "VSyncRelaxed",
+#ifndef _UWP
+  "VRR",
+#endif
+};
+static constexpr const std::array s_display_sync_mode_display_names = {
+  TRANSLATE_NOOP("Settings", "Disabled"),
+  TRANSLATE_NOOP("Settings", "VSync"),
+  TRANSLATE_NOOP("Settings", "Relaxed VSync"),
+#ifndef _UWP
+  TRANSLATE_NOOP("Settings", "VRR/FreeSync/GSync"),
+#endif
+};
+
+std::optional<DisplaySyncMode> Settings::ParseDisplaySyncMode(const char* str)
+{
+  int index = 0;
+  for (const char* name : s_display_sync_mode_names)
+  {
+    if (StringUtil::Strcasecmp(name, str) == 0)
+      return static_cast<DisplaySyncMode>(index);
+
+    index++;
+  }
+
+  return std::nullopt;
+}
+
+const char* Settings::GetDisplaySyncModeName(DisplaySyncMode mode)
+{
+  return s_display_sync_mode_names[static_cast<size_t>(mode)];
+}
+
+const char* Settings::GetDisplaySyncModeDisplayName(DisplaySyncMode mode)
+{
+  return Host::TranslateToCString("Settings", s_display_sync_mode_display_names[static_cast<size_t>(mode)]);
+}
+
 static constexpr const std::array s_display_exclusive_fullscreen_mode_names = {
   "Automatic",
   "Disallowed",

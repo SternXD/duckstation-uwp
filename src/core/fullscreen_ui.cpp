@@ -1745,6 +1745,7 @@ void FullscreenUI::DrawInputBindingButton(SettingsInterface* bsi, InputBindingIn
     BeginInputBinding(bsi, type, section, name, display_name);
   }
   else if (ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsKeyPressed(ImGuiKey_NavGamepadMenu, false))
+  else if (ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsKeyPressed(ImGuiKey_NavGamepadMenu, false))
   {
     bsi->DeleteValue(section, name);
     SetSettingsChanged(bsi);
@@ -4327,9 +4328,25 @@ void FullscreenUI::DrawDisplaySettingsPage()
       "GPU", "UseSoftwareRendererForReadbacks", false);
   }
 
-  if (is_hardware)
-  {
-    MenuHeading(FSUI_CSTR("Rendering"));
+  DrawEnumSetting(
+    bsi, FSUI_CSTR("VSync"),
+    FSUI_CSTR("Synchronizes presentation of the console's frames to the host. Enable for smoother animations. "
+              "VRR is not present on UWP."),
+    "Display", "SyncMode", Settings::DEFAULT_DISPLAY_SYNC_MODE, &Settings::ParseDisplaySyncMode,
+    &Settings::GetDisplaySyncModeName, &Settings::GetDisplaySyncModeDisplayName, DisplaySyncMode::Count);
+
+  DrawToggleSetting(
+    bsi, FSUI_CSTR("Sync To Host Refresh Rate"),
+    FSUI_CSTR("Adjusts the emulation speed so the console's refresh rate matches the host when VSync and Audio "
+              "Resampling are enabled."),
+    "Main", "SyncToHostRefreshRate", false);
+
+  DrawToggleSetting(bsi, FSUI_CSTR("Optimal Frame Pacing"),
+                    FSUI_CSTR("Ensures every frame generated is displayed for optimal pacing. Disable if you are "
+                              "having speed or sound issues."),
+                    "Display", "DisplayAllFrames", false);
+
+  MenuHeading(FSUI_CSTR("Rendering"));
 
     DrawIntListSetting(
       bsi, FSUI_CSTR("Internal Resolution"),
@@ -5910,9 +5927,9 @@ void FullscreenUI::DrawSaveStateSelector(bool is_loading)
 
           closed = true;
         }
-        else if (hovered &&
-                 (ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsKeyPressed(ImGuiKey_NavGamepadMenu, false) ||
-                  ImGui::IsKeyPressed(ImGuiKey_F1, false)))
+
+        if (hovered &&
+            (ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsKeyPressed(ImGuiKey_NavGamepadMenu, false)))
         {
           s_save_state_selector_submenu_index = static_cast<s32>(i);
         }
@@ -6391,12 +6408,10 @@ void FullscreenUI::DrawGameList(const ImVec2& heading_size)
         if (hovered)
           selected_entry = entry;
 
-        if (selected_entry &&
-            (ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsKeyPressed(ImGuiKey_NavGamepadMenu, false) ||
-             ImGui::IsKeyPressed(ImGuiKey_F3, false)))
-        {
-          HandleGameListOptions(selected_entry);
-        }
+      if (selected_entry &&
+          (ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsKeyPressed(ImGuiKey_NavGamepadMenu, false)))
+      {
+        HandleGameListOptions(selected_entry);
       }
     }
 
@@ -6610,10 +6625,9 @@ void FullscreenUI::DrawGameGrid(const ImVec2& heading_size)
       if (pressed)
       {
         HandleGameListActivate(entry);
-      }
-      else if (hovered &&
-               (ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsKeyPressed(ImGuiKey_NavGamepadMenu, false) ||
-                ImGui::IsKeyPressed(ImGuiKey_F3, false)))
+
+      if (hovered &&
+          (ImGui::IsItemClicked(ImGuiMouseButton_Right) || ImGui::IsKeyPressed(ImGuiKey_NavGamepadMenu, false)))
       {
         HandleGameListOptions(entry);
       }
