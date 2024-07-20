@@ -106,7 +106,7 @@ CHD images with built-in subchannel information are also supported.
 Requirements:
  - Visual Studio 2022
 
-1. Clone the repository: `git clone https://github.com/irixaligned/duckstation-uwp.git`.
+1. Clone the repository: `git clone https://github.com/SternXD/duckstation-uwp.git`.
 2. Download the dependencies pack from https://github.com/stenzek/duckstation-ext-qt-minimal/releases/download/latest/deps-x64.7z, and extract it to `dep\msvc`.
 3. Open the Visual Studio solution `duckstation.sln` in the root.
 4. Right click the `duckstation-uwp` project and then click Publish > Create App Packages and follow the instructions in the wizard. Make sure to build target ReleaseUWP, otherwise you will get compiler errors.
@@ -145,7 +145,7 @@ Hotkeys:
 Support for this project, alongside new release announcements, and generally most things related to Xbox emulation, are provided by the Emulation Hub discord.
 
 - Discord: https://discord.gg/xboxemus
-- Dev Store: https://xboxdevstore.github.io
+- Dev Store: https://xboxdev.store
 
 ## Disclaimers
 
