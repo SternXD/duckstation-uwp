@@ -605,7 +605,7 @@ static std::array<const char*, static_cast<u32>(InputSourceType::Count)> s_input
 #endif
 #ifdef ENABLE_SDL2
   "SDL",
-#else
+#elif defined(__ANDROID__)
   "Android",
 #endif
 }};
@@ -642,10 +642,10 @@ bool InputManager::GetInputSourceDefaultEnabled(InputSourceType type)
 #endif
 #endif
 
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(_UWP)
     case InputSourceType::SDL:
       return true;
-#else
+#elif defined(__ANDROID__)
     case InputSourceType::Android:
       return true;
 #endif
@@ -1278,7 +1278,7 @@ void InputManager::UpdateHostMouseMode()
 
 bool InputManager::IsUsingRawInput()
 {
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(_UWP)
   return static_cast<bool>(s_input_sources[static_cast<u32>(InputSourceType::RawInput)]);
 #else
   return false;
@@ -1978,7 +1978,7 @@ void InputManager::ReloadSources(SettingsInterface& si, std::unique_lock<std::mu
 #endif
 #ifdef ENABLE_SDL2
   UpdateInputSourceState(si, settings_lock, InputSourceType::SDL, &InputSource::CreateSDLSource);
-#else
+#elif defined(__ANDROID__)
   UpdateInputSourceState(si, settings_lock, InputSourceType::Android, &InputSource::CreateAndroidSource);
 #endif
 }

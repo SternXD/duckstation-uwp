@@ -155,20 +155,21 @@ u32 AudioStream::GetMSForBufferSize(u32 sample_rate, u32 buffer_size)
 
 static constexpr const std::array s_backend_names = {
   "Null",
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(_UWP)
   "Cubeb",
   "SDL",
-#else
+#endif
+#ifdef __ANDROID__
   "AAudio",
   "OpenSLES",
 #endif
 };
 static constexpr const std::array s_backend_display_names = {
   TRANSLATE_NOOP("AudioStream", "Null (No Output)"),
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(_UWP)
   TRANSLATE_NOOP("AudioStream", "Cubeb"),
   TRANSLATE_NOOP("AudioStream", "SDL"),
-#else
+#elif defined(__ANDROID__)
   "AAudio",
   "OpenSL ES",
 #endif

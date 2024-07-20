@@ -55,21 +55,27 @@
     </ClInclude>
     <ClInclude Include="opengl_context.h">
       <ExcludedFromBuild Condition="'$(Platform)'=='ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)'=='DebugUWP' Or '$(Configuration)'=='ReleaseUWP'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="opengl_context_agl.h">
       <ExcludedFromBuild>true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)'=='DebugUWP' Or '$(Configuration)'=='ReleaseUWP'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="opengl_context_egl.h">
       <ExcludedFromBuild>true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)'=='DebugUWP' Or '$(Configuration)'=='ReleaseUWP'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="opengl_context_egl_wayland.h">
       <ExcludedFromBuild>true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)'=='DebugUWP' Or '$(Configuration)'=='ReleaseUWP'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="opengl_context_egl_x11.h">
       <ExcludedFromBuild>true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)'=='DebugUWP' Or '$(Configuration)'=='ReleaseUWP'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="opengl_context_wgl.h">
       <ExcludedFromBuild Condition="'$(Platform)'=='ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)'=='DebugUWP' Or '$(Configuration)'=='ReleaseUWP'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="opengl_device.h">
       <ExcludedFromBuild Condition="'$(Platform)'=='ARM64'">true</ExcludedFromBuild>

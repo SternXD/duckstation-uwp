@@ -25,13 +25,17 @@ enum class InputSourceType : u32
   Pointer,
   Sensor,
 #ifdef _WIN32
+#ifndef _UWP
   DInput,
+#endif
   XInput,
+#ifndef _UWP
   RawInput,
 #endif
-#ifndef __ANDROID__
+#endif
+#if !defined(__ANDROID__) && !defined(_UWP)
   SDL,
-#else
+#elif defined(__ANDROID__)
   Android,
 #endif
   Count,

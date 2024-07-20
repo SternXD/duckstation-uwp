@@ -23,10 +23,11 @@ class SoundTouch;
 enum class AudioBackend : u8
 {
   Null,
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(_UWP)
   Cubeb,
   SDL,
-#else
+#endif
+#ifdef __ANDROID__
   AAudio,
   OpenSLES,
 #endif
@@ -125,10 +126,12 @@ public:
   static constexpr u32 MIN_EXPANSION_BLOCK_SIZE = 256;
   static constexpr u32 MAX_EXPANSION_BLOCK_SIZE = 4096;
 
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(_UWP)
   static constexpr AudioBackend DEFAULT_BACKEND = AudioBackend::Cubeb;
-#else
+#elif defined(__ANDROID__)
   static constexpr AudioBackend DEFAULT_BACKEND = AudioBackend::AAudio;
+#elif defined(_UWP)
+  static constexpr AudioBackend DEFAULT_BACKEND = AudioBackend::XAudio2;
 #endif
 
   struct DeviceInfo

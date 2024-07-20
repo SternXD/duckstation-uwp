@@ -2017,7 +2017,7 @@ static const char* s_log_filters[] = {
   "WAVWriter",
   "WindowInfo",
 
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(_UWP)
   "CubebAudioStream",
   "SDLAudioStream",
 #endif
@@ -2036,9 +2036,11 @@ static const char* s_log_filters[] = {
   "D3D12Device",
   "D3D12StreamBuffer",
   "D3DCommon",
+#ifndef _UWP
   "DInputSource",
   "Win32ProgressCallback",
   "Win32RawInputSource",
+#endif
   "XAudio2AudioStream",
   "XInputSource",
 #elif defined(__APPLE__)

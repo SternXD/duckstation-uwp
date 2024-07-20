@@ -247,6 +247,18 @@ u32 GetHandlerCodeSize()
   return 0;
 }
 
+u32 GetHandlerCodeSize()
+{
+  return 0;
+}
+
+#else
+
+u32 GetHandlerCodeSize()
+{
+  return 0;
+}
+
 #endif
 
 bool InstallHandler(Handler handler)

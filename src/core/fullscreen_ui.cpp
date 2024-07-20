@@ -1343,7 +1343,7 @@ void FullscreenUI::DrawLandingTemplate(ImVec2* menu_pos, ImVec2* menu_size)
       dl->AddImage(s_app_icon_texture.get(), logo_pos, logo_pos + logo_size);
       dl->AddText(heading_font, heading_font->FontSize,
                   ImVec2(logo_pos.x + logo_size.x + LayoutScale(LAYOUT_MENU_BUTTON_X_PADDING), logo_pos.y),
-                  ImGui::GetColorU32(ImGuiCol_Text), "DuckStation");
+                  ImGui::GetColorU32(ImGuiCol_Text), "DuckStation-UWP");
     }
 
     // draw time

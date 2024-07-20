@@ -47,7 +47,7 @@
     <DepsDLLs Include="$(DepsBinDir)zlib1.dll" />
     <DepsDLLs Include="$(DepsBinDir)zstd.dll" />
   </ItemGroup>
-  <Target Name="DepsCopyDLLs"
+  <Target Name="DepsCopyDLLs" Condition="'$(BuildingForUWP)' != 'true'"
     AfterTargets="Build"
     Inputs="@(DepsDLLs)"
     Outputs="@(DepsDLLs -> '$(OutDir)%(RecursiveDir)%(Filename)%(Extension)')">
